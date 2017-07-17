@@ -5,19 +5,22 @@ let Inquirer = require('inquirer');
 const bamazonConnection = require('./connections.js').bamazon;
 
 bamazonConnection.queryAsync("SELECT * FROM products").then( res => {
-
-	for (var i = 0; i < res.length; i++) {
+	let displayProducts = function() {
+		for (var i = 0; i < res.length; i++) {
           console.log(
             "ID: " +
             res[i].item_id +
             " || Name: " +
             res[i].product_name +
-            " || Price: " +
+            " || Department: " +
+            res[i].department_name +
+            " || Price: $" +
             res[i].price +
             " || Quantity: " +
             res[i].stock_quantity
           );
-        }   
+        }
+    };  
 	
 	function shoppingCart(){	
     	const questions = [
@@ -55,6 +58,7 @@ bamazonConnection.queryAsync("SELECT * FROM products").then( res => {
 		});
 	};
 
+	displayProducts();
 	shoppingCart();
 
 });
